@@ -1,5 +1,6 @@
 package io.bluebeaker.ic2utils;
 
+import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.Logger;
 
 import io.bluebeaker.ic2utils.Tags;
@@ -14,7 +15,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@Mod(modid = Tags.MOD_ID, name = Tags.MOD_NAME, version = Tags.VERSION)
+@Mod(modid = Tags.MOD_ID, name = Tags.MOD_NAME, version = Tags.VERSION,acceptableRemoteVersions = ">="+Tags.VERSION)
 public class IC2Utils
 {
     public static final String MODID = Tags.MOD_ID;
@@ -24,7 +25,8 @@ public class IC2Utils
     public MinecraftServer server;
 
     private static Logger logger;
-    
+    private static boolean isServer;
+
     public IC2Utils() {
         MinecraftForge.EVENT_BUS.register(this);
     }
@@ -32,6 +34,9 @@ public class IC2Utils
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         logger = event.getModLog();
+        if(event.getSide()== Side.SERVER){
+            isServer =true;
+        }
     }
     @EventHandler
     public void onServerStart(FMLServerStartingEvent event){
@@ -47,5 +52,9 @@ public class IC2Utils
 
     public static Logger getLogger(){
         return logger;
+    }
+
+    public static boolean isServer() {
+        return isServer;
     }
 }
