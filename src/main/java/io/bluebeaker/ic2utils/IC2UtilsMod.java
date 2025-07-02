@@ -3,7 +3,6 @@ package io.bluebeaker.ic2utils;
 import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.Logger;
 
-import io.bluebeaker.ic2utils.Tags;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.ConfigManager;
@@ -16,7 +15,7 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Mod(modid = Tags.MOD_ID, name = Tags.MOD_NAME, version = Tags.VERSION,acceptableRemoteVersions = ">="+Tags.VERSION)
-public class IC2Utils
+public class IC2UtilsMod
 {
     public static final String MODID = Tags.MOD_ID;
     public static final String NAME = Tags.MOD_NAME;
@@ -27,7 +26,7 @@ public class IC2Utils
     private static Logger logger;
     private static boolean isServer;
 
-    public IC2Utils() {
+    public IC2UtilsMod() {
         MinecraftForge.EVENT_BUS.register(this);
     }
     

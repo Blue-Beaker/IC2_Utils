@@ -1,6 +1,5 @@
 package io.bluebeaker.ic2utils;
 
-import ic2.core.CreativeTabIC2;
 import ic2.core.IC2;
 import io.bluebeaker.ic2utils.items.ItemElectricWrenchNew;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -19,13 +18,13 @@ public class IC2UtilsItems {
     public static void registerItems(RegistryEvent.Register<Item> event) {
         event.getRegistry().register(ITEM_ELECTRIC_WRENCH_NEW);
         ITEM_ELECTRIC_WRENCH_NEW.setCreativeTab(IC2.tabIC2);
-        if(!IC2Utils.isServer()){
+        if(!IC2UtilsMod.isServer()){
             ModelLoader.setCustomModelResourceLocation(ITEM_ELECTRIC_WRENCH_NEW,0,new ModelResourceLocation(ITEM_ELECTRIC_WRENCH_NEW.getRegistryName(),"inventory"));
         }
     }
     private static Item addItem(Item item, String id){
-        item.setRegistryName(IC2Utils.MODID,id);
-        item.setTranslationKey(IC2Utils.MODID+"."+id);
+        item.setRegistryName(IC2UtilsMod.MODID,id);
+        item.setTranslationKey(IC2UtilsMod.MODID+"."+id);
         return item;
     }
 }

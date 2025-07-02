@@ -1,21 +1,14 @@
 package io.bluebeaker.ic2utils.items;
 
-import ic2.api.item.ElectricItem;
-import ic2.api.item.IElectricItem;
-import ic2.api.item.IEnhancedOverlayProvider;
-import ic2.api.item.IItemHudInfo;
+import ic2.api.item.*;
 import ic2.core.IHitSoundOverride;
-import ic2.core.item.ElectricItemManager;
 import ic2.core.item.IPseudoDamageItem;
 import ic2.core.item.tool.HarvestLevel;
 import ic2.core.item.tool.ItemToolWrenchElectric;
 import ic2.core.item.tool.ItemToolWrenchNew;
 import ic2.core.item.tool.ToolClass;
 import ic2.core.ref.ItemName;
-import ic2.core.util.StackUtil;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
@@ -36,7 +29,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ItemElectricWrenchNew extends ItemTool implements IPseudoDamageItem, IElectricItem, IItemHudInfo,IEnhancedOverlayProvider, IHitSoundOverride {
+public class ItemElectricWrenchNew extends ItemTool implements IPseudoDamageItem, IElectricItem, IItemHudInfo,IEnhancedOverlayProvider, IHitSoundOverride , IBoxable {
 
     ItemToolWrenchNew newWrench;
     ItemToolWrenchElectric electricWrench;
@@ -45,6 +38,7 @@ public class ItemElectricWrenchNew extends ItemTool implements IPseudoDamageItem
 
     public ItemElectricWrenchNew() {
         super(ToolMaterial.IRON,new HashSet<>());
+        this.efficiency=8.0F;
         Item wrench = ItemName.wrench_new.getItemStack().getItem();
 
         setHarvestLevel(ToolClass.Wrench.getName(), HarvestLevel.Iron.level);
@@ -78,13 +72,19 @@ public class ItemElectricWrenchNew extends ItemTool implements IPseudoDamageItem
     }
 
     @Override
+    public float getDestroySpeed(ItemStack itemStack, IBlockState state) {
+        return canHarvestBlock(state, itemStack) ? this.efficiency : 1.0F;
+    }
+
+    @Override
     public boolean canHarvestBlock(IBlockState state, ItemStack itemStack) {
         if(newWrench==null || !ElectricItem.manager.canUse(itemStack,energyPerUse)) return false;
         return newWrench.canHarvestBlock(state,itemStack);
     }
+
     @Override
     public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
-        ItemStack stack = StackUtil.get(player, hand);
+        ItemStack stack = player.getHeldItem(hand);
         if(newWrench==null || !ElectricItem.manager.canUse(stack,energyPerUse)) return EnumActionResult.FAIL;
         return newWrench.onItemUseFirst(player, world, pos, side, hitX, hitY, hitZ, hand);
     }
@@ -101,7 +101,7 @@ public class ItemElectricWrenchNew extends ItemTool implements IPseudoDamageItem
 
     public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker)
     {
-        ElectricItem.manager.use(stack, 200, attacker);
+        ElectricItem.manager.use(stack, this.energyPerUse, attacker);
         return true;
     }
 
@@ -109,7 +109,10 @@ public class ItemElectricWrenchNew extends ItemTool implements IPseudoDamageItem
     {
         if (!worldIn.isRemote && (double)state.getBlockHardness(worldIn, pos) != 0.0D)
         {
-            ElectricItem.manager.use(stack, 100, entityLiving);
+            if(!ElectricItem.manager.canUse(stack,energyPerUse)){
+                return false;
+            }
+            ElectricItem.manager.use(stack, energyPerUse, entityLiving);
         }
         return true;
     }
@@ -142,5 +145,10 @@ public class ItemElectricWrenchNew extends ItemTool implements IPseudoDamageItem
     @Override
     public void setStackDamage(ItemStack paramItemStack, int paramInt) {
         super.setDamage(paramItemStack,paramInt);
+    }
+
+    @Override
+    public boolean canBeStoredInToolbox(ItemStack itemStack) {
+      return true;
     }
 }

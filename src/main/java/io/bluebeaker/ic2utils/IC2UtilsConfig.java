@@ -5,9 +5,9 @@ import net.minecraftforge.common.config.Config.Comment;
 import net.minecraftforge.common.config.Config.LangKey;
 import net.minecraftforge.common.config.Config.Type;
 
-@Config(modid = IC2Utils.MODID,type = Type.INSTANCE,category = "general")
+@Config(modid = IC2UtilsMod.MODID,type = Type.INSTANCE,category = "general")
 public class IC2UtilsConfig {
-    @Comment("Example")
-    @LangKey("config.ic2utils.example.name")
-    public static boolean example = true;
+    @Comment("Prevent breaking crop sticks when walking over it")
+    @LangKey("config.ic2utils.noTrampleCrops.name")
+    public static boolean noTrampleCrops = true;
 }
