@@ -1,5 +1,7 @@
 package io.bluebeaker.ic2utils;
 
+import io.bluebeaker.ic2utils.recipe.IC2UtilsRecipes;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.Logger;
 
@@ -37,6 +39,7 @@ public class IC2UtilsMod
             isServer =true;
         }
     }
+
     @EventHandler
     public void onServerStart(FMLServerStartingEvent event){
         this.server=event.getServer();

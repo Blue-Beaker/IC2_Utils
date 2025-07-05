@@ -13,5 +13,6 @@ public class IC2UtilsConfig {
 
     @Comment("Disable to remove default recipes of Electric Wrench (New).")
     @LangKey("config.ic2utils.wrenchRecipes.name")
+    @Config.RequiresMcRestart
     public static boolean wrenchRecipes = true;
 }
