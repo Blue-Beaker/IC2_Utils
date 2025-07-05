@@ -12,7 +12,6 @@ import java.util.List;
 
 @mezz.jei.api.JEIPlugin
 public class JEIPlugin implements IModPlugin {
-    private IJeiRuntime jeiRuntime;
     @Override
     public void register(IModRegistry registry) {
         List<WrenchRecipeWrapper> recipes = new ArrayList<>();
@@ -20,10 +19,5 @@ public class JEIPlugin implements IModPlugin {
             recipes.add(new WrenchRecipeWrapper(wrenchRecipe));
         }
         registry.addRecipes(recipes, VanillaRecipeCategoryUid.CRAFTING);
-    }
-
-    @Override
-    public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
-        this.jeiRuntime=jeiRuntime;
     }
 }
