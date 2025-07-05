@@ -1,1 +1,3 @@
 config.ic2utils.noTrampleCrops.name=Crop Trample Prevention
+config.ic2utils.wrenchRecipes.name=Enable Default Wrench Recipes
+item.ic2utils.electric_wrench_new.name=Electric Wrench (New)
