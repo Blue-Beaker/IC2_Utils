@@ -66,9 +66,9 @@ public class IC2UtilsRecipes {
         @Override
         public ItemStack getCraftingResult(InventoryCrafting inv) {
             ItemStack matched = getMatched(inv);
-            ItemStack result = output.copy();
-            NBTTagCompound tagCompound = matched.getTagCompound();
+            ItemStack result = new ItemStack(output.getItem(),1,matched.getMetadata());
 
+            NBTTagCompound tagCompound = matched.getTagCompound();
             if(tagCompound==null) return result;
 
             result.setTagCompound(matched.getTagCompound());

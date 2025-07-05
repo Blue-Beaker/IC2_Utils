@@ -39,6 +39,10 @@ public class ItemElectricWrenchNew extends ItemTool implements IPseudoDamageItem
     public ItemElectricWrenchNew() {
         super(ToolMaterial.IRON,new HashSet<>());
         this.efficiency=8.0F;
+        setMaxDamage(27);
+        setMaxStackSize(1);
+        setNoRepair();
+
         Item wrench = ItemName.wrench_new.getItemStack().getItem();
 
         setHarvestLevel(ToolClass.Wrench.getName(), HarvestLevel.Iron.level);
