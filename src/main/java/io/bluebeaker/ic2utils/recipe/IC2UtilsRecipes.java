@@ -33,7 +33,7 @@ public class IC2UtilsRecipes {
     }
 
     @SubscribeEvent
-    public static void registerRecipes(RegistryEvent<IRecipe> event){
+    public static void registerRecipes(RegistryEvent.Register<IRecipe> event){
         addRecipes();
         for (WrenchRecipe wrenchRecipe : WRENCH_RECIPES) {
             ForgeRegistries.RECIPES.register(wrenchRecipe);
