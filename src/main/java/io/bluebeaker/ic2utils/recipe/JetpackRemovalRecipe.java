@@ -42,11 +42,13 @@ public class JetpackRemovalRecipe implements IRecipe {
         remainingItems.set(matched.slotPlate, jetpack);
 
         // Process tool
-        ItemStack tool = inv.getStackInSlot(matched.slotTool).copy();
+        if(matched.slotTool>=0){
+            ItemStack tool = inv.getStackInSlot(matched.slotTool).copy();
 
-        if(tool.isItemStackDamageable()){
-            tool.attemptDamageItem(1,new Random(),null);
-            remainingItems.set(matched.slotTool,tool);
+            if(tool.isItemStackDamageable()){
+                tool.attemptDamageItem(1,new Random(),null);
+                remainingItems.set(matched.slotTool,tool);
+            }
         }
 
         return remainingItems;
