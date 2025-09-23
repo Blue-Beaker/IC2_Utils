@@ -1,7 +1,5 @@
 package io.bluebeaker.ic2utils.recipe;
 
-import ic2.api.item.IC2Items;
-import ic2.core.IC2;
 import ic2.core.ref.ItemName;
 import io.bluebeaker.ic2utils.IC2UtilsConfig;
 import io.bluebeaker.ic2utils.IC2UtilsItems;
@@ -12,36 +10,35 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.bluebeaker.ic2utils.IC2UtilsConfig.jetpackRemovalRecipe;
 import static io.bluebeaker.ic2utils.IC2UtilsConfig.wrenchRecipes;
 
 @Mod.EventBusSubscriber
 public class IC2UtilsRecipes {
     public static List<WrenchRecipe> getWrenchRecipes() {
-        return WRENCH_RECIPES;
+        return new ArrayList<>(WRENCH_RECIPES);
+    }
+    public static List<JetpackRemovalRecipe> getJetpackRemovalRecipes() {
+        return new ArrayList<>(JETPACK_REMOVAL_RECIPES);
     }
 
     static List<WrenchRecipe> WRENCH_RECIPES=new ArrayList<>();
-    static List<JetpackRemovalRecipe> JETPACK_REMOVAL_RECIPE = new ArrayList<>();
+    static List<JetpackRemovalRecipe> JETPACK_REMOVAL_RECIPES = new ArrayList<>();
 
     private static void addRecipes() {
         if(wrenchRecipes){
             WRENCH_RECIPES.add(new WrenchRecipe(new ItemStack(IC2UtilsItems.ITEM_ELECTRIC_WRENCH_NEW),ItemName.electric_wrench.getItemStack(),new ResourceLocation(IC2UtilsMod.MODID,"electric_wrench_to_new")));
             WRENCH_RECIPES.add(new WrenchRecipe(ItemName.electric_wrench.getItemStack(),new ItemStack(IC2UtilsItems.ITEM_ELECTRIC_WRENCH_NEW),new ResourceLocation(IC2UtilsMod.MODID,"electric_wrench_from_new")));
         }
-        if(jetpackRemovalRecipe){
-            for (String tool:IC2UtilsConfig.jetpackRemovalTool){
-                ItemStack stack = getStackFromString(tool);
-                if(stack==null) continue;
-                JETPACK_REMOVAL_RECIPE.add(new JetpackRemovalRecipe(stack,new ResourceLocation(IC2UtilsMod.MODID,"jetpack_remove_"+(tool.replace(":","_")))));
-            }
+        for (String tool:IC2UtilsConfig.jetpackRemovalTool){
+            ItemStack stack = getStackFromString(tool);
+            if(stack==null) continue;
+            JETPACK_REMOVAL_RECIPES.add(new JetpackRemovalRecipe(stack,new ResourceLocation(IC2UtilsMod.MODID,"jetpack_remove_"+(tool.replace(":","_")))));
         }
     }
 
@@ -51,7 +48,7 @@ public class IC2UtilsRecipes {
         for (WrenchRecipe wrenchRecipe : WRENCH_RECIPES) {
             ForgeRegistries.RECIPES.register(wrenchRecipe);
         }
-        for(JetpackRemovalRecipe recipe : JETPACK_REMOVAL_RECIPE){
+        for(JetpackRemovalRecipe recipe : JETPACK_REMOVAL_RECIPES){
             ForgeRegistries.RECIPES.register(recipe);
         }
     }
