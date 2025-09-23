@@ -29,20 +29,19 @@ public class WrenchRecipe implements IRecipe {
 
     private ItemStack getMatched(InventoryCrafting inv) {
         ItemStack matched = null;
-        for (int y = 0; y < inv.getHeight(); y++) {
-            for (int x = 0; x < inv.getWidth(); x++) {
-                ItemStack stack = inv.getStackInRowAndColumn(y, x);
-                if (!stack.isEmpty()) {
-                    if (matched != null)
-                        return ItemStack.EMPTY;
-                    matched = stack;
-                }
+        for (int i = 0; i < inv.getSizeInventory(); i++) {
+            ItemStack stack = inv.getStackInSlot(i);
+            if (stack.isEmpty()) continue;
+            if(matched==null && input.isItemEqualIgnoreDurability(stack)) {
+                matched = stack;
+            }else {
+                return ItemStack.EMPTY;
             }
         }
-        if (matched != null && input.isItemEqualIgnoreDurability(matched)) {
-            return matched;
+        if(matched==null){
+            return ItemStack.EMPTY;
         }
-        return ItemStack.EMPTY;
+        return matched;
     }
 
     @Override

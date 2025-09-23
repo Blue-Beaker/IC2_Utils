@@ -11,4 +11,16 @@ public class IC2UtilsConfig {
     @LangKey("config.ic2utils.wrenchRecipes.name")
     @Config.RequiresMcRestart
     public static boolean wrenchRecipes = true;
+
+    @Comment("Add recipe to remove Jetpack on chestplates.")
+    @LangKey("config.ic2utils.jetpackRemovalRecipe.name")
+    @Config.RequiresMcRestart
+    public static boolean jetpackRemovalRecipe = true;
+
+    @Comment({"Tool needed to remove Jetpack on chestplates.",
+            "format: modid:id[:metadata]",
+            "Write minecraft:air for no tool needed."})
+    @LangKey("config.ic2utils.jetpackRemovalTool.name")
+    @Config.RequiresMcRestart
+    public static String[] jetpackRemovalTool = {"minecraft:air"};
 }
