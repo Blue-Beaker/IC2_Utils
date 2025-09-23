@@ -3,7 +3,6 @@ package io.bluebeaker.ic2utils.jei;
 import ic2.core.item.armor.jetpack.JetpackAttachmentRecipe;
 import ic2.core.item.armor.jetpack.JetpackHandler;
 import ic2.core.util.ItemComparableItemStack;
-import ic2.jeiIntegration.recipe.crafting.JetpackRecipeWrapper;
 import io.bluebeaker.ic2utils.recipe.JetpackRemovalRecipe;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.ingredients.VanillaTypes;
@@ -17,7 +16,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import org.lwjgl.util.Color;
 
 import java.util.ArrayList;
 import java.util.HashSet;

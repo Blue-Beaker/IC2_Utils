@@ -3,7 +3,6 @@ package io.bluebeaker.ic2utils.jei;
 import io.bluebeaker.ic2utils.recipe.IC2UtilsRecipes;
 import io.bluebeaker.ic2utils.recipe.JetpackRemovalRecipe;
 import io.bluebeaker.ic2utils.recipe.WrenchRecipe;
-import mezz.jei.api.IJeiRuntime;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.api.recipe.IRecipeWrapper;

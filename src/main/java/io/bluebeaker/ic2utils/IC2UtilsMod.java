@@ -1,7 +1,5 @@
 package io.bluebeaker.ic2utils;
 
-import io.bluebeaker.ic2utils.recipe.IC2UtilsRecipes;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.Logger;
 
