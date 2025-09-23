@@ -1,10 +1,10 @@
 package io.bluebeaker.ic2utils.recipe;
 
-import ic2.api.item.IC2Items;
 import ic2.api.item.IElectricItem;
 import ic2.core.item.armor.jetpack.JetpackAttachmentRecipe;
 import ic2.core.item.armor.jetpack.JetpackHandler;
 import ic2.core.ref.ItemName;
+import io.bluebeaker.ic2utils.NBTUtils;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -15,6 +15,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
+import java.util.Random;
 
 public class JetpackRemovalRecipe implements IRecipe {
     public final ItemStack input;
@@ -24,8 +25,30 @@ public class JetpackRemovalRecipe implements IRecipe {
     public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv) {
         MatchedIngredients matched = getMatched(inv);
         ItemStack original = inv.getStackInSlot(matched.slotPlate);
+        NBTTagCompound originalTag = original.getTagCompound();
+        // Process jetpack
         NonNullList<ItemStack> remainingItems = IRecipe.super.getRemainingItems(inv);
-        remainingItems.set(matched.slotPlate, ItemName.jetpack_electric.getItemStack());
+        ItemStack jetpack = ItemName.jetpack_electric.getItemStack();
+        // Move jetpack data
+        NBTTagCompound nbtPack = new NBTTagCompound();
+        NBTUtils.moveTag("toggleTimer",originalTag,nbtPack);
+        NBTUtils.moveTag("hoverMode",originalTag,nbtPack);
+
+        if(!(original.getItem() instanceof IElectricItem)) {
+            NBTUtils.moveTag("charge",originalTag,nbtPack);
+        }
+
+        jetpack.setTagCompound(nbtPack);
+        remainingItems.set(matched.slotPlate, jetpack);
+
+        // Process tool
+        ItemStack tool = inv.getStackInSlot(matched.slotTool).copy();
+
+        if(tool.isItemStackDamageable()){
+            tool.attemptDamageItem(1,new Random(),null);
+            remainingItems.set(matched.slotTool,tool);
+        }
+
         return remainingItems;
     }
 
@@ -61,8 +84,10 @@ public class JetpackRemovalRecipe implements IRecipe {
         ItemStack copiedChestplate = inv.getStackInSlot(matched.slotPlate).copy();
         JetpackHandler.setJetpackAttached(copiedChestplate,false);
         NBTTagCompound nbt = copiedChestplate.getTagCompound();
-        if(!(copiedChestplate.getItem() instanceof IElectricItem) && nbt!=null && nbt.hasKey("charge")){
-            nbt.removeTag("charge");
+        if(nbt!=null){
+            if(!(copiedChestplate.getItem() instanceof IElectricItem)) nbt.removeTag("charge");
+            nbt.removeTag("toggleTimer");
+            nbt.removeTag("hoverMode");
             if(nbt.isEmpty()){
                 copiedChestplate.setTagCompound(null);
             }
