@@ -1,5 +1,6 @@
 package io.bluebeaker.ic2utils;
 
+import io.bluebeaker.ic2utils.helpers.ItemActionsListener;
 import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.Logger;
 
@@ -36,6 +37,8 @@ public class IC2UtilsMod
         if(event.getSide()== Side.SERVER){
             isServer =true;
         }
+
+        MinecraftForge.EVENT_BUS.register(ItemActionsListener.class);
     }
 
     @EventHandler

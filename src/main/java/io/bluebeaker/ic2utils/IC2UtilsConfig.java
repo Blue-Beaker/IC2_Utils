@@ -12,6 +12,10 @@ public class IC2UtilsConfig {
     @Config.RequiresMcRestart
     public static boolean wrenchRecipes = true;
 
+    @Comment("QOL: Sneak-use coils, heat conductors or motors on a corresponding machine will install them into the machine.")
+    @LangKey("config.ic2utils.sneakAddCoils.name")
+    public static boolean sneakAddCoils = true;
+
     @Comment({"Tool needed to split Jetpack from chestplates.",
         "format: modid:id[:metadata]",
         "Write minecraft:air for no tool needed.",
